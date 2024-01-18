@@ -6,7 +6,7 @@ import imageio.v2 as imageio
 class ImageToIconConverter:
     def __init__(self, root):
         self.root = root
-        self.root.title("Image to Icon Converter")
+        self.root.title("Image to Icon Converter by Swir 1.0")
 
         self.input_files = []
         self.output_file = tk.StringVar()
