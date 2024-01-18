@@ -1,10 +1,6 @@
-# Image-To-Ico
- converter image to  ICO
+# Image to Ico converter
 
+easy-to-use icon generating program
 
-For all my programs to work, you need to install libraries requirements
-
-you can do it quickly with a command pip install -r requirements.txt
-
-
-pip install pillow tk imageio
+## Image
+![ico](https://images90.fotosik.pl/703/af7eacd5ee8b6e1bgen.png)
