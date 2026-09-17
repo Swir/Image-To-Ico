@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Image To ICO project icon</title>
+  <desc id="desc">An image tile becomes an ICO file, in the SWIR electric-blue palette.</desc>
+  <rect x="8" y="8" width="240" height="240" rx="48" fill="#07111C" stroke="#62E5FF" stroke-width="2"/>
+  <rect x="40" y="42" width="132" height="124" rx="16" fill="#0B2035" stroke="#0088FF" stroke-width="5"/>
+  <circle cx="80" cy="78" r="13" fill="#62E5FF"/>
+  <path d="M52 149L87 109L111 131L139 95L160 123V152H52Z" fill="#0088FF"/>
+  <path d="M147 101H192L218 128V210H126V122Z" fill="#02050A" stroke="#62E5FF" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M190 102V130H216" fill="none" stroke="#62E5FF" stroke-width="4" stroke-linejoin="round"/>
+  <text x="172" y="179" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="27" font-weight="700" fill="#F4FAFF">ICO</text>
+  <path d="M49 204H96M82 192L96 204L82 216" fill="none" stroke="#62E5FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

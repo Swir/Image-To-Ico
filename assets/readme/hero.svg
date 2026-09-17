@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+  <title id="title">Image To ICO — SWIR desktop tools</title>
+  <desc id="desc">PNG and JPG to Windows icons. Image To ICO, a Python desktop utility with preview. Decorative documentation banner, not an application screenshot.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#02050A"/>
+      <stop offset="0.55" stop-color="#06101A"/>
+      <stop offset="1" stop-color="#02050A"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0088FF"/>
+      <stop offset="0.45" stop-color="#62E5FF"/>
+      <stop offset="1" stop-color="#0088FF"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#62E5FF" stroke-opacity="0.055"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="320" rx="26" fill="url(#bg)"/>
+  <rect x="1" y="1" width="1198" height="318" rx="25" fill="none" stroke="#62E5FF" stroke-opacity="0.25"/>
+  <rect width="1200" height="320" rx="26" fill="url(#grid)"/>
+  <path d="M0 263C180 223 250 310 430 275S720 232 885 265S1070 299 1200 251" fill="none" stroke="url(#cyan)" stroke-opacity="0.24" stroke-width="2"/>
+  <path d="M780 45H1180" stroke="#62E5FF" stroke-opacity="0.14"/>
+  <path d="M1000 70H1180" stroke="#0088FF" stroke-opacity="0.2"/>
+  <g transform="translate(63 65) scale(0.68)">
+    <rect x="8" y="8" width="240" height="240" rx="48" fill="#07111C" stroke="#62E5FF" stroke-width="2"/>
+    <rect x="40" y="42" width="132" height="124" rx="16" fill="#0B2035" stroke="#0088FF" stroke-width="5"/>
+    <circle cx="80" cy="78" r="13" fill="#62E5FF"/>
+    <path d="M52 149L87 109L111 131L139 95L160 123V152H52Z" fill="#0088FF"/>
+    <path d="M147 101H192L218 128V210H126V122Z" fill="#02050A" stroke="#62E5FF" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M190 102V130H216" fill="none" stroke="#62E5FF" stroke-width="4" stroke-linejoin="round"/>
+    <text x="172" y="179" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="27" font-weight="700" fill="#F4FAFF">ICO</text>
+    <path d="M49 204H96M82 192L96 204L82 216" fill="none" stroke="#62E5FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="270" y="70" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="4" fill="#62E5FF">SWIR PROJECT</text>
+  <text x="270" y="145" font-family="Segoe UI, Arial, sans-serif" font-size="62" font-weight="800" fill="#F4FAFF">IMAGE TO ICO</text>
+  <text x="272" y="190" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="500" fill="#B8D2E0">PNG and JPG to Windows icons.</text>
+  <text x="272" y="232" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="600" letter-spacing="1.5" fill="#62E5FF">DESKTOP UTILITY  •  PYTHON  •  IMAGE PREVIEW</text>
+  <g transform="translate(1015 242)">
+    <circle r="4" fill="#62E5FF"/>
+    <circle cx="25" r="4" fill="#0088FF"/>
+    <circle cx="50" r="4" fill="#62E5FF" opacity="0.5"/>
+  </g>
+</svg>
