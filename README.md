@@ -25,12 +25,23 @@
 
 ## Project status
 
+<p align="center">
+  <img width="100%" src="assets/readme/progress-card.svg" alt="Image To ICO product progress — N/A because no authoritative product roadmap exists" />
+</p>
+
 | Item | Current state |
 |---|---|
 | Application | Existing Tkinter converter; use one source image at a time. |
 | Published package | Windows x64 [`v1.0.0`](https://github.com/Swir/Image-To-Ico/releases/tag/v1.0.0). |
 | Source check | PNG/JPG preview and single-image ICO export passed a bounded Linux/Xvfb smoke test. |
 | Current limitation | Multiple-image export failed in that test; see [Known limitations](#known-limitations). |
+| Product progress | **N/A** — no authoritative product-completion roadmap is maintained. |
+
+<p align="center">
+  <img width="100%" src="assets/readme/progress-mini.svg" alt="Image To ICO compact product progress — N/A" />
+</p>
+
+The progress graphics intentionally report **N/A**, not 0%, because this repository has no authoritative product-roadmap denominator. Release availability and the bounded source smoke are tracked separately.
 
 The Windows EXE was not runtime-tested during this documentation update. Full test scope and environment: [verification notes](docs/README-VERIFICATION.md).
 
@@ -124,14 +135,15 @@ There is no visible file-list selector. **Remove Image** deletes the last added 
 | [`ikona.py`](ikona.py) | Tkinter GUI, Pillow preview and imageio export. |
 | [`requirements.txt`](requirements.txt) | Legacy dependency note; see the installation caveat. |
 | [`.github/workflows/release.yml`](.github/workflows/release.yml) | Windows PyInstaller build and release packaging. |
-| [`assets/readme/`](assets/readme/) | Documentation banner and project icon. |
+| [`assets/readme/`](assets/readme/) | Documentation banner, project icon and SWIR Progress SVG PRO assets. |
+| [`tools/generate_readme_progress.py`](tools/generate_readme_progress.py) | Deterministic progress-asset generator/check; product progress remains N/A until a real roadmap exists. |
 | [`docs/README-VERIFICATION.md`](docs/README-VERIFICATION.md) | Source-check findings and documentation verification scope. |
 
 ## Releases and project history
 
 The existing [v1.0.0 release](https://github.com/Swir/Image-To-Ico/releases/tag/v1.0.0) was published on September 12, 2026. Browse [all releases](https://github.com/Swir/Image-To-Ico/releases) or [source history](https://github.com/Swir/Image-To-Ico/commits/main/) for actual changes.
 
-There is no dedicated roadmap in this checkout. This README migration changes documentation and its artwork only: application code, versions, release assets and the existing EXE icon are unchanged.
+There is no dedicated roadmap in this checkout. This README migration and progress-SVG rollout change documentation and its artwork only: application code, versions, release assets and the existing EXE icon are unchanged.
 
 ## Known limitations
 
