@@ -1,77 +1,52 @@
-name: Build and Release
+name: Build, verify and release
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: Release tag (for example v1.0.0)
-        required: true
-        default: v1.0.0
   push:
-    tags:
-      - "v*"
-    branches:
-      - main
+    branches: [main]
     paths:
-      - ".github/workflows/release.yml"
+      - '.github/workflows/release.yml'
+      - 'VERSION'
+  pull_request:
+    paths:
+      - '**.py'
+      - 'requirements*.txt'
+      - 'release-config.json'
+      - '.github/workflows/release.yml'
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   windows-release:
     runs-on: windows-latest
-
+    timeout-minutes: 25
+    permissions:
+      contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Resolve version
-        shell: pwsh
-        run: |
-          if ("${{ github.event_name }}" -eq "workflow_dispatch") {
-            $version = "${{ inputs.version }}"
-          } elseif ("${{ github.ref_type }}" -eq "tag") {
-            $version = "${{ github.ref_name }}"
-          } else {
-            $version = "v1.0.0"
-          }
-          "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.12'
           cache: pip
-
-      - name: Install build dependencies
-        shell: pwsh
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install pyinstaller Pillow imageio
-
-      - name: Build Windows EXE
-        shell: pwsh
-        run: |
-          pyinstaller --noconfirm --clean --onefile --windowed --name "Image-To-Ico" ikona.py
-
-      - name: Package release
-        shell: pwsh
-        run: |
-          $zip = "Image-To-Ico-$env:VERSION-Windows-x64.zip"
-          Compress-Archive -Path "dist/Image-To-Ico.exe", "README.md" -DestinationPath $zip -Force
-          $hash = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLower()
-          "$hash  $zip" | Set-Content "$zip.sha256"
-          "ZIP_NAME=$zip" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
-      - name: Publish GitHub Release
-        shell: pwsh
+      - name: Install pinned dependencies
+        run: python -m pip install -r requirements-build.txt
+      - name: Run regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Build and verify Windows package
+        run: python scripts/release_tools.py build
+      - name: Retain verified build
+        uses: actions/upload-artifact@v4
+        with:
+          name: verified-windows-package
+          path: release/*
+          if-no-files-found: error
+      - name: Verify fresh draft download and publish release
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release view $env:VERSION --repo "${{ github.repository }}" *> $null
-          if ($LASTEXITCODE -eq 0) {
-            gh release upload $env:VERSION "dist/Image-To-Ico.exe" "$env:ZIP_NAME" "$env:ZIP_NAME.sha256" --clobber --repo "${{ github.repository }}"
-          } else {
-            gh release create $env:VERSION "dist/Image-To-Ico.exe" "$env:ZIP_NAME" "$env:ZIP_NAME.sha256" --target "${{ github.sha }}" --title "Image To ICO $env:VERSION" --generate-notes --repo "${{ github.repository }}"
-          }
+        run: python scripts/release_tools.py publish

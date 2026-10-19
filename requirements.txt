@@ -1,1 +1,1 @@
-pip install pillow tk imageio
+Pillow==13.0.0

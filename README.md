@@ -6,167 +6,135 @@
 
 # Image To ICO
 
-**Select an image. Preview it. Export a Windows icon.**
+**Preview PNG/JPEG images and export verified, multi-resolution Windows icons.**
 
-![Python](https://img.shields.io/badge/Python-3-02050A?style=for-the-badge&logo=python&logoColor=62E5FF)
+![Python](https://img.shields.io/badge/Python-3.11%2B-02050A?style=for-the-badge&logo=python&logoColor=62E5FF)
 ![Interface](https://img.shields.io/badge/Interface-Tkinter-02050A?style=for-the-badge&logoColor=62E5FF)
-![Images](https://img.shields.io/badge/Images-Pillow%20%2B%20imageio-02050A?style=for-the-badge&logoColor=62E5FF)
-![Output](https://img.shields.io/badge/Output-ICO-02050A?style=for-the-badge&logoColor=62E5FF)
+![Images](https://img.shields.io/badge/Images-Pillow-02050A?style=for-the-badge&logoColor=62E5FF)
+![Source](https://img.shields.io/badge/Source-1.1.0-0088FF?style=for-the-badge)
 
-[![Author](https://img.shields.io/badge/by-Swir-0088FF?style=flat-square&logo=github)](https://github.com/Swir)
-[![Package](https://img.shields.io/badge/Windows%20package-v1.0.0-0088FF?style=flat-square)](https://github.com/Swir/Image-To-Ico/releases/tag/v1.0.0)
-[![Stars](https://img.shields.io/github/stars/Swir/Image-To-Ico?style=flat-square&color=0088FF)](https://github.com/Swir/Image-To-Ico/stargazers)
-
-[**Highlights**](#highlights) · [**Get started**](#quick-start) · [**Usage**](#usage) · [**Limitations**](#known-limitations) · [**Releases**](#releases-and-project-history)
+[**Download**](https://github.com/Swir/Image-To-Ico/releases/latest) · [**Usage**](#usage) · [**Changes**](CHANGELOG.md) · [**Verification**](#verification)
 
 </div>
 
-## 📸 Screenshot
+## Screenshot — earlier interface
 
 ![Image-To-Ico application screenshot](docs/screenshots/application.jpg)
 
-Initial image-to-icon converter window on Windows.
-
----
+The earlier 1.0 interface on Windows. Version 1.1 adds a file list, icon-size selection, progress, cancellation and per-file results.
 
 ## Project status
+
+| Item | Current state |
+|---|---|
+| Source | **1.1.0** |
+| Windows download | [Latest verified release](https://github.com/Swir/Image-To-Ico/releases/latest) |
+| Supported input | PNG, JPG and JPEG, up to 40 megapixels per image |
+| Export | One multi-resolution ICO per source image |
+| Embedded sizes | 16, 24, 32, 48, 64, 128 and 256 pixels |
+| Verification | Regression suite plus source and frozen Windows runtime smoke tests |
+| Product roadmap | No authoritative product-completion denominator; progress remains N/A |
 
 <p align="center">
   <img width="100%" src="assets/readme/progress-card.svg" alt="Image To ICO product progress — N/A because no authoritative product roadmap exists" />
 </p>
 
-| Item | Current state |
-|---|---|
-| Application | Existing Tkinter converter; use one source image at a time. |
-| Published package | Windows x64 [`v1.0.0`](https://github.com/Swir/Image-To-Ico/releases/tag/v1.0.0). |
-| Source check | PNG/JPG preview and single-image ICO export passed a bounded Linux/Xvfb smoke test. |
-| Current limitation | Multiple-image export failed in that test; see [Known limitations](#known-limitations). |
-| Product progress | **N/A** — no authoritative product-completion roadmap is maintained. |
-
-<p align="center">
-  <img width="100%" src="assets/readme/progress-mini.svg" alt="Image To ICO compact product progress — N/A" />
-</p>
-
-The progress graphics intentionally report **N/A**, not 0%, because this repository has no authoritative product-roadmap denominator. Release availability and the bounded source smoke are tracked separately.
-
-The Windows EXE was not runtime-tested during this documentation update. Full test scope and environment: [verification notes](docs/README-VERIFICATION.md).
+Source version, release availability and product-roadmap progress are separate. The release workflow publishes only after regression, packaged-runtime, checksum and fresh-download checks pass.
 
 ## Overview
 
-**Image To ICO** is a small Python desktop utility for turning PNG or JPG images into `.ico` files. Image selection, a thumbnail and a save dialog share one compact window, without command-line conversion steps.
+Image To ICO converts local PNG/JPEG files into Windows `.ico` files. Each source image becomes one icon containing the selected resolutions. Pillow handles decoding, preview and ICO export; imageio is no longer required.
 
-The application opens local files; there is no upload step in its source. Pillow provides the preview and imageio handles the export request. This is an icon-conversion utility, not a pixel editor or asset library.
+Images retain their aspect ratio and receive transparent padding to fit a square icon canvas. Existing alpha transparency and JPEG EXIF orientation are preserved. The app does not upload images or contact a conversion service.
 
 ## Highlights
 
-| Feature | What it does |
+| Feature | Behavior |
 |---|---|
-| PNG / JPG input | Select `.png` and `.jpg` images through the file picker. |
-| Image preview | Display the first added image in a thumbnail bounded to 100 × 100 pixels. |
-| Add / remove | Add files and remove the most recently added file. |
-| ICO save dialog | Select an output path; single-image export is the verified workflow. |
-| Tkinter / ttk GUI | Work with a compact desktop interface. |
-| Windows distribution | Existing EXE, portable ZIP and ZIP checksum in Releases. |
+| File list and preview | Select and preview an input; remove the selected item. |
+| Embedded icon sizes | Choose any supported combination of sizes in each ICO. |
+| Single-image export | Choose an ICO path; the save dialog asks before replacing an existing file. |
+| Batch export | Choose a folder; export one ICO per input and add numbered suffixes to avoid existing filenames. |
+| Verified writing | Reopen every embedded size before finalizing the output. |
+| Atomic replacement | A failed conversion does not replace an existing destination file. |
+| Responsive processing | Conversion runs off the GUI thread; cancellation stops before the next image. |
+| Per-file results | See successful output paths and individual failures; a corrupt batch input does not stop valid later inputs. |
 
 ## Quick Start
 
-### Existing Windows package
+### Windows package
 
-Download `Image-To-Ico-v1.0.0-Windows-x64.zip` from [release v1.0.0](https://github.com/Swir/Image-To-Ico/releases/tag/v1.0.0), extract it and launch `Image-To-Ico.exe`. Python is bundled by the existing PyInstaller build. A standalone EXE and the ZIP's `.sha256` sidecar are also available.
+Download the [latest verified release](https://github.com/Swir/Image-To-Ico/releases/latest). Choose `Image-To-Ico.exe` or extract the portable Windows x64 ZIP and launch the EXE inside it. Python is included.
 
-To compare the ZIP checksum in PowerShell:
+New releases include `SHA256SUMS.txt`, `BUILD_INFO.json` and `runtime-verification.json`. Compare a downloaded file with its entry in the checksum manifest:
 
 ```powershell
-Get-FileHash .\Image-To-Ico-v1.0.0-Windows-x64.zip -Algorithm SHA256
-Get-Content .\Image-To-Ico-v1.0.0-Windows-x64.zip.sha256
+Get-FileHash .\Image-To-Ico-v1.1.0-Windows-x64.zip -Algorithm SHA256
+Get-Content .\SHA256SUMS.txt
 ```
 
-### From source — Windows PowerShell
+### From source
 
-Use Python with working Tkinter support:
+Use Python with Tkinter support:
 
 ```powershell
 git clone https://github.com/Swir/Image-To-Ico.git
 cd Image-To-Ico
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install Pillow imageio
-.\.venv\Scripts\python.exe -m tkinter
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe ikona.py
 ```
 
-Close the Tkinter test window before running the last command. Calling the virtual environment's Python directly avoids changing PowerShell activation policy.
-
-**Installation caveat:** [`requirements.txt`](requirements.txt) currently contains a shell command, not a valid requirements list. Use the direct dependency installation above instead of `pip install -r requirements.txt`. Tkinter must be available in your Python installation.
-
-<details>
-<summary><strong>Other source environments</strong></summary>
-
-With Python, Tkinter and a graphical display already available:
-
-```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install Pillow imageio
-.venv/bin/python -m tkinter
-.venv/bin/python ikona.py
-```
-
-A local Linux/Xvfb source check does not establish packaged Linux or macOS support.
-
-</details>
-
-## Requirements and compatibility
-
-| Component | Scope |
-|---|---|
-| Python | Python 3; the Windows release workflow selects 3.11. |
-| GUI | Tkinter / ttk and a graphical display. |
-| Image libraries | Pillow for preview; imageio for image reading and export. |
-| Published binary | Windows x64. |
-| Tested source environment | Python 3.13.5, Tk 8.6.16, Pillow 12.3.0 and imageio 2.37.3 on Linux/Xvfb. |
-
-The tested environment is an evidence snapshot, not a guarantee for every library version or input image. This documentation update does not change dependency versions.
+`requirements.txt` is a valid pinned dependency list. Tkinter comes from the Python/OS installation, not from PyPI. The Windows release workflow uses Python 3.12; no packaged Linux or macOS release is claimed.
 
 ## Usage
 
-1. Choose **Add Image** and select one PNG or JPG. The first added image appears in the preview.
-2. Choose **Convert to ICO**, select a destination and save. Check the resulting icon before using it in a build.
-3. Use **Remove Image** to clear the previous selection, then add the next image.
+1. Choose **Add PNG / JPEG…** and select one or more images.
+2. Select a file to see its preview. **Remove selected** removes only that entry from the list, not the original file.
+3. Choose the resolutions to embed in each icon.
+4. Choose **Convert to ICO…**. For one image, choose a filename; for several images, choose a folder.
+5. Review the output paths and any errors in the results area.
 
-There is no visible file-list selector. **Remove Image** deletes the last added file, while the preview shows the first remaining image. Selecting multiple images does not export a separate ICO per file.
+Batch names such as `photo.ico`, `photo (2).ico` and `photo (3).ico` preserve existing files and handle identical basenames from different input folders. **Cancel batch** stops before the next image. Closing during conversion waits for the current image to finish before exiting.
 
-## Technology and project layout
+## Verification
+
+```powershell
+python -m unittest discover -s tests -v
+python ikona.py --self-test ico-self-test.json
+```
+
+The regression suite covers all seven ICO sizes, PNG alpha, palette transparency, JPEG orientation, proportional padding, corrupt inputs, batch name collisions, cancellation and preservation of existing files after export failures.
+
+The self-test creates a hidden application window, renders a real image preview, exports generated PNG/JPEG fixtures through the background conversion flow and reopens both ICO outputs. It uses an isolated temporary folder and does not touch user images, the clipboard or the pointer.
+
+Release verification repeats this test in the standalone EXE and the extracted portable package. The workflow then downloads its draft release, verifies checksums and source provenance, repeats the frozen-runtime test and publishes the release. Existing public releases are never overwritten.
+
+The old imageio multi-image failure is retained as historical evidence in [the 2026-09-17 verification notes](docs/README-VERIFICATION.md); it describes the earlier source, not the 1.1 implementation.
+
+## Project layout
 
 | Path | Purpose |
 |---|---|
-| [`ikona.py`](ikona.py) | Tkinter GUI, Pillow preview and imageio export. |
-| [`requirements.txt`](requirements.txt) | Legacy dependency note; see the installation caveat. |
-| [`.github/workflows/release.yml`](.github/workflows/release.yml) | Windows PyInstaller build and release packaging. |
-| [`assets/readme/`](assets/readme/) | Documentation banner, project icon and SWIR Progress SVG PRO assets. |
-| [`tools/generate_readme_progress.py`](tools/generate_readme_progress.py) | Deterministic progress-asset generator/check; product progress remains N/A until a real roadmap exists. |
-| [`docs/README-VERIFICATION.md`](docs/README-VERIFICATION.md) | Source-check findings and documentation verification scope. |
-
-## Releases and project history
-
-The existing [v1.0.0 release](https://github.com/Swir/Image-To-Ico/releases/tag/v1.0.0) was published on September 12, 2026. Browse [all releases](https://github.com/Swir/Image-To-Ico/releases) or [source history](https://github.com/Swir/Image-To-Ico/commits/main/) for actual changes.
-
-There is no dedicated roadmap in this checkout. This README migration and progress-SVG rollout change documentation and its artwork only: application code, versions, release assets and the existing EXE icon are unchanged.
+| `ikona.py` | Tkinter UI, preview, background worker and runtime smoke test |
+| `ico_core.py` | Image validation, proportional canvas, ICO writing and batch naming |
+| `tests/test_conversion.py` | File-based conversion regressions |
+| `requirements.txt` | Runtime dependency |
+| `scripts/release_tools.py` | Build, package, checksum and release verification |
+| `.github/workflows/release.yml` | Windows build and gated publication |
+| `CHANGELOG.md` | Version history |
 
 ## Known limitations
 
-- **Multiple-image export:** two equal-size inputs produced `KeyError: 'ICO'` through the existing `imageio.mimsave` call with the tested versions. A single generated PNG or JPG exported and reopened successfully. No batch-per-file or animated-icon feature is claimed.
-- **No output-size editor:** the GUI has no resolution selector, cropping, pixel editing or individual ICO-size controls.
-- **Limited error handling:** save failures are reported in a dialog, but some image-reading and preview errors are outside that handler.
-- **Scoped verification:** the source smoke used 64 × 64 RGB fixtures and a virtual Linux display, not arbitrary inputs or the Windows EXE. See the [test notes and reproduction](docs/README-VERIFICATION.md).
+- PNG and JPEG are the supported input formats; animated icons and pixel editing are outside this utility's scope.
+- Inputs are limited to 40 megapixels. Very small images can look soft when enlarged to larger icon sizes.
+- Icons use transparent square padding; cropping and manual positioning are not provided.
+- Cancellation takes effect between images, allowing the current output to finish safely.
+- No authoritative product-wide roadmap is maintained, so the progress graphic remains N/A.
 
 ## License and attribution
 
-Developed by **Swir**. No `LICENSE` file is currently included in this repository; this documentation update does not assign a new license or change attribution.
-
-## 🔎 Search Keywords
-
-`png to ico converter` • `jpg to ico converter` • `image to ico python` • `windows icon maker` • `ico converter gui` • `python icon generator` • `tkinter image converter` • `create ico file` • `desktop icon utility` • `Pillow image preview` • `imageio ICO export` • `local image conversion`
-
----
+Developed by **Swir**. No `LICENSE` file is currently included; this update does not assign new licensing terms.
 
 <div align="center">
 
@@ -174,8 +142,6 @@ Developed by **Swir**. No `LICENSE` file is currently included in this repositor
 
 ### `SELECT • PREVIEW • EXPORT`
 
-**Image To ICO — by Swir**
-
-[**← SWIR profile**](https://github.com/Swir) · [**All projects →**](https://github.com/Swir?tab=repositories) · [**Report an issue**](https://github.com/Swir/Image-To-Ico/issues)
+[**SWIR profile**](https://github.com/Swir) · [**Releases**](https://github.com/Swir/Image-To-Ico/releases) · [**Report an issue**](https://github.com/Swir/Image-To-Ico/issues)
 
 </div>

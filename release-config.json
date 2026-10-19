@@ -1,0 +1,14 @@
+{
+  "title": "Image To ICO",
+  "package": "Image-To-Ico",
+  "readme": "README.md",
+  "applications": [
+    {
+      "name": "Image-To-Ico",
+      "entry": "ikona.py"
+    }
+  ],
+  "dependencies": [
+    "Pillow"
+  ]
+}
