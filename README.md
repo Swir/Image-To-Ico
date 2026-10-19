@@ -21,6 +21,12 @@
 
 </div>
 
+## 📸 Screenshot
+
+![Image-To-Ico application screenshot](docs/screenshots/application.jpg)
+
+Initial image-to-icon converter window on Windows.
+
 ---
 
 ## Project status
